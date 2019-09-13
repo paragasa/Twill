@@ -4,7 +4,7 @@ import './App.css';
 
 
 import HomePage from './pages/Home/home.component'
-
+import ShopPage from './pages/Shop/shoppage.component';
 const HatsPage = () =>{
   return <div className=""><h1>hats</h1></div>
 }
@@ -25,7 +25,7 @@ const  App = () => {
             component={HomePage}
 
             />  
-          <Route exact path="/shop"  component={TopicsList} />
+          <Route exact path="/shop"  component={ShopPage} />
           <Route path="/shop/:slug"  component={HatsPage} />
         </Switch>
     </div>
