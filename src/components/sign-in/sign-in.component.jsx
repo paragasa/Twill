@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './sign-in.styles.scss';
 
-import {signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 import FormInput from '../../components/form-input/form-input.component'
 import CustomButton from '../../components/custom-button/custom-button.component';
 export class SignIn extends Component {
@@ -17,10 +17,16 @@ export class SignIn extends Component {
     static propTypes = {
 
     }
-    handleSubmit = (e) =>{
+    handleSubmit = async(e) =>{
         e.preventDefault();
+        const { email, password} = this.state;
 
-        this.setState({email: '', password: ''});
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            this.setState({email: '', password: ''});
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     handleChange = (e) =>{
@@ -51,6 +57,7 @@ export class SignIn extends Component {
                 />
                 <div className="buttons">
                     <CustomButton
+                        onClick = {this.handleSubmit}
                         type="submit" >
                         Sign In
                     </CustomButton>
