@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
+
 import {auth} from '../../firebase/firebase.utils';
 import './header.styles.scss';
 import {ReactComponent as Logo} from '../../assets/thick-thread-spool.svg'
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
+const firestore = firebase.firestore();
+
+firestore.collection('user').doc("rNF2eCr6LwNz12ahldD5").collection("cartitems").doc("kCqf0NvqxZjf1BuUpuNE");
+ 
 const Header = ({currentUser}) => {
     return (
+
         <div className="header">
             <Link to="/" >
                 <Logo className="logo-container"/>
