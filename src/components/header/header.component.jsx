@@ -7,10 +7,10 @@ import './header.styles.scss';
 import {ReactComponent as Logo} from '../../assets/thick-thread-spool.svg'
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
-const firestore = firebase.firestore();
-
-const Header = ({currentUser}) => {
+const Header = ({currentUser, hidden}) => {
 
     return (
 
@@ -32,7 +32,11 @@ const Header = ({currentUser}) => {
                     :
                    ( <Link className="option" to="/signin">Sign In</Link>)
                 }
+                <CartIcon/>
             </div>
+                {
+                    hidden ? null: (<CartDropdown/>)
+                }
         </div>
     )
 }
@@ -41,8 +45,9 @@ Header.propTypes = {
 
 }
 
-const mapStateToProps = (state) => ({
-    currentUser: state.user.currentUser
+const mapStateToProps = ({user: {currentUser}, cart:{hidden}}) => ({
+    currentUser: currentUser,
+    hidden : hidden,
 });
 
 export default connect(mapStateToProps)(Header);
