@@ -8,7 +8,7 @@ import Header from './components/header/header.component'
 import HomePage from './pages/Home/home.component'
 import ShopPage from './pages/Shop/shoppage.component';
 import SignInAndSignUpPage from './pages/signin-signup/signin-signup.component'
-
+import {Redirect} from 'react-router-dom';
 
 class  App extends React.Component {
   
@@ -51,15 +51,23 @@ class  App extends React.Component {
             />  
           <Route exact path="/shop"  component={ShopPage} />
           <Route path="/shop/:slug"  component={ShopPage} />
-          <Route path="/signup"  component={SignInAndSignUpPage} />
+          <Route exact path="/signin"  render={ 
+            () => this.props.currentUser ? (<Redirect to='/' />): (<SignInAndSignUpPage/>)
+          } />
         </Switch>
     </div>
   );
   }
 }
+const mapStateToProps = ({user}) => {
+  return {
+    currentUser: user.currentUser
+  }
+}
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
     
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
